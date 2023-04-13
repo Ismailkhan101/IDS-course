@@ -5,7 +5,8 @@ Data science is a field of study that focuses on techniques and algorithms to ex
 Python Basic Syntax 
 ## Python Basic Syntax
 This is a basic Python program that uses the print() function to output the message "Hello, world!" to the console. It's often used as a simple starting point when learning a new programming language.
-### print("Muhammad Ismail!")
+#
+ print("Muhammad Ismail!")
 ## Variables and data types
 This code demonstrates how to define variables in Python and assign them different data types. The name variable is a string, the age variable is an integer, the is_male variable is a boolean, and the height variable is a float.
 #
