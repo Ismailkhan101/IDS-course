@@ -8,10 +8,11 @@ This is a basic Python program that uses the print() function to output the mess
 ### print("Muhammad Ismail!")
 ## Variables and data types
 This code demonstrates how to define variables in Python and assign them different data types. The name variable is a string, the age variable is an integer, the is_male variable is a boolean, and the height variable is a float.
-### A=5 
-### B=3
-### print(A+B) = 8
-## Functions
+#
+ A=5 
+B=3
+ print(A+B) = 8
+ Functions
 This code defines a function square that takes a number as input, multiplies it by itself, and returns the result. The function is then called with an argument of 5 and the returned value is stored in the result variable. Finally, the value of result is printed to the console using the print() function.
 ### def square(x=5): return x*x
 it print 25 which is square of five
