@@ -125,15 +125,14 @@ Numpy is the fundamental package for numeric computing with Python. It provides 
 
 In this lecture, we will talk about creating array with certain data types, manipulating array, selecting elements from arrays, and loading dataset into array. Such functions are useful for manipulating data and understanding the functionalities of other common Python data packages.
 ## Import
-You'll recall that we import a library using the `import` keyword as numpy's common abbreviation is np
+when we want to utilize a library in our Python code, we use the "import" keyword. In the case of the widely used numerical computing library "NumPy," it is conventionally abbreviated as "np" in Python code. Therefore, we can refer to NumPy as "np" after importing it.
 ###
 import numpy as np
 ##
 import math
 ##
 # Array Creation
-Arrays are displayed as a list or list of lists and can be created through list as well. When creating an
- array, we pass in a list as an argument in numpy array
+NumPy is a powerful numerical computing library for Python that provides support for arrays, matrices, and mathematical operations on them. The np.array() function is a NumPy function that creates a new array object from a given list or array-like object. In this case, it creates a NumPy array with the values [1, 2, 3]. The resulting array is assigned to the variable a for further use in the code.
  ####
  a = np.array([1, 2, 3])
  ####
@@ -141,6 +140,8 @@ Arrays are displayed as a list or list of lists and can be created through list 
 ####
 [1 2 3]
 ####
+In NumPy, arrays can have one or more dimensions, which are also known as axes. The ndim attribute is a property of NumPy arrays that returns the number of dimensions of the array.
+#####
 print(a.ndim)
 ####
 1
@@ -153,7 +154,7 @@ We can print the number of dimensions of a list using the ndim attribute
 ####
 print(a.ndim)
 ####
-If we pass in a list of lists in numpy array, we create a multi-dimensional array, for instance, a matrix
+The resulting array b is a two-dimensional array with shape (2, 3), meaning it has 2 rows and 3 columns, and contains the values from the list of lists provided. This can be visualized as a matrix with 2 rows and 3 columns, where the first row contains the values [1, 2, 3] and the second row contains the values [4, 5, 6].
 ####
 b = np.array([[1,2,3],[4,5,6]])
 ####
@@ -182,6 +183,18 @@ c.dtype.name
 #### offers several functions to create arrays with initial placeholders, such as zero's or one's.
 #### Lets create two arrays, both the same shape but with different filler values
 d = np.zeros((3,4,4))
+####
+#### Let's break down the code:
+
+np.zeros(): This is a NumPy function that creates a new array object with a given shape and initializes all the elements to 0.
+
+(3, 4, 4): This is a tuple specifying the shape of the array to be created. The tuple contains three integer values: 3, 4, and 4, representing the number of elements in each dimension of the array.
+
+d = np.zeros(...): This assigns the created array to the variable d for further use in the code.
+
+The resulting array d is a three-dimensional array with shape (3, 4, 4), meaning it has 3 slices, each with 4 rows and 4 columns, and all elements are initialized to 0. This can be visualized as a cube with 3 slices, each slice containing 4 rows and 4 columns, and all elements initialized to 0.
+
+Note that the np.zeros() function can be used to create arrays of any dimension and shape, and the elements are initialized to 0 by default.
 ####
 print(d)
 ####
