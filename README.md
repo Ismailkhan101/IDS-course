@@ -494,3 +494,47 @@ sub_array[0,0] = 50
 print("sub array index [0,0] value after change:", sub_array[0,0])
 ####
 print("original array index [0,1] value after change:", a[0,1])
+
+#### Trying Numpy with Datasets
+#### Now that we have learned the essentials of Numpy let's use it on a couple of datasets
+#### Here we have a very popular dataset on wine quality, and we are going to only look at red wines. The data
+#### fields include: fixed acidity, volatile aciditycitric acid, residual sugar, chlorides, free sulfur dioxide,
+#### total sulfur dioxidedensity, pH, sulphates, alcohol, quality
+#### To load a dataset in Numpy, we can use the genfromtxt() function. We can specify data file name, delimiter
+#### (which is optional but often used), and number of rows to skip if we have a header row, hence it is 1 here
+
+#### The genfromtxt() function has a parameter called dtype for specifying data types of each column this
+#### parameter is optional. Without specifying the types, all types will be casted the same to the more
+#### general/precise type
+wines = np.genfromtxt("datasets/winequality-red.csv", delimiter=";", skip_header=True)
+
+graduate_admission.shape
+#### We can retrieve a column from the array using the column's name for example, let's get the CGPA column and
+#### only the first five values.
+graduate_admission['CGPA'][0:5]
+array([9.65, 8.87, 8.  , 8.67, 8.21])
+#### Since the GPA in the dataset range from 1 to 10, and in the US it's more common to use a scale of up to 4,
+#### a common task might be to convert the GPA by dividing by 10 and then multiplying by 4
+graduate_admission['CGPA'] = graduate_admission['CGPA'] /10 *4
+graduate_admission['CGPA'][0:20] #let's get 20 values
+#### Recall boolean masking. We can use this to find out how many students have had research experience by
+#### creating a boolean mask and passing it to the array indexing operator
+len(graduate_admission[graduate_admission['Research'] == 1])
+#### Since we have the data field chance of admission, which ranges from 0 to 1, we can try to see if students
+#### with high chance of admission (>0.8) on average have higher GRE score than those with lower chance of
+#### admission (<0.4)
+
+#### So first we use boolean masking to pull out only those students we are interested in based on their chance
+#### of admission, then we pull out only their GPA scores, then we print the mean values.
+print(graduate_admission[graduate_admission['Chance_of_Admit'] > 0.8]['GRE_Score'].mean())
+print(graduate_admission[graduate_admission['Chance_of_Admit'] < 0.4]['GRE_Score'].mean())
+#### Take a moment to reflect here, do you understand what is happening in these calls?
+
+#### When we do the boolean masking we are left with an array with tuples in it still, and numpy holds underneath
+#### this a list of the columns we specified and their name and indexes
+graduate_admission[graduate_admission['Chance_of_Admit'] > 0.8]
+#### Let's also do this with GPA
+print(graduate_admission[graduate_admission['Chance_of_Admit'] > 0.8]['CGPA'].mean())
+print(graduate_admission[graduate_admission['Chance_of_Admit'] < 0.4]['CGPA'].mean())
+#### Hrm, well, I guess one could have expected this. The GPA and GRE for students who have a higher chance of
+#### being admitted, at least based on our cursory look here, seems to be higher.
