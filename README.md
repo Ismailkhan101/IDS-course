@@ -592,3 +592,24 @@ print(s)
 3    40
 4    50
 dtype: int64
+## How to use API 
+Using an API typically involves sending HTTP requests to a specific URL endpoint and receiving a response in a specified format, such as JSON or XML. Here are the basic steps to use an API
+##
+import pandas as pd
+import requests
+###
+ Pandas provides powerful data manipulation and analysis tools, while Requests allows you to make HTTP requests to APIs. Here's an example that combines both libraries to fetch data from an API and process it using Pandas
+###
+response = requests.get('https://api.themoviedb.org/3/movie/top_rated?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US&page=1')
+###
+It fetches the top-rated movies using the specified API key, language, and page parameters.
+###
+tem_dat=pd.DataFrame([response.json])
+the JSON response from the API endpoint you provided contains multiple movie objects under the "results" key. If you want to create a DataFrame with each movie as a separate row, you can directly pass data['results'] to the pd.DataFrame() function without wrapping it in a list
+###
+for re in range(10):
+    response = requests.get('https://api.themoviedb.org/3/movie/top_rated?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US&page=1')
+    tr=pd.DataFrame(response.json()['results'])[['id','title','overview']]
+    df= tr.append(tr)
+###
+    making a GET request to the "top_rated" endpoint of the "themoviedb" API in a loop. For each request, you are extracting specific data from the JSON response (movie id, title, and overview) and appending it to a DataFrame
