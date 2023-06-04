@@ -551,3 +551,44 @@ print(graduate_admission[graduate_admission['Chance_of_Admit'] > 0.8]['CGPA'].me
 print(graduate_admission[graduate_admission['Chance_of_Admit'] < 0.4]['CGPA'].mean())
 #### Hrm, well, I guess one could have expected this. The GPA and GRE for students who have a higher chance of
 #### being admitted, at least based on our cursory look here, seems to be higher.
+## Pandas
+Pandas is an open-source Python library for data manipulation and analysis, providing high-performance, easy-to-use data structures and data analysis tools.
+
+Pandas is commonly used for working with structured data, such as tabular data, and offers functionalities for data cleaning, preprocessing, filtering, merging, and analysis, making it a powerful tool for data manipulation tasks in Python.
+##
+The main data structures provided by Pandas are
+##
+DataFrame: A DataFrame is a two-dimensional labeled data structure, similar to a table or a spreadsheet. It consists of rows and columns, where each column can hold different data types (numeric, string, datetime, etc.). DataFrames are useful for storing and manipulating structured data. They offer functionalities for indexing, selecting, filtering, merging, reshaping, and aggregating data.
+
+Series: A Series is a one-dimensional labeled array that can hold any data type. It is similar to a column in a DataFrame or a single column of data. Series objects are useful for performing computations and operations on individual columns or data sequences. They also support indexing and slicing operations.
+
+These data structures provide powerful capabilities for handling and analyzing data in a tabular format, allowing users to perform various data manipulation tasks efficiently.
+### DataFrame Example:
+import pandas as pd
+
+### Creating a DataFrame from a dictionary
+data = {'Name': ['John', 'Emma', 'Peter', 'Lisa'],
+        'Age': [28, 32, 25, 30],
+        'City': ['New York', 'London', 'Paris', 'Sydney']}
+df = pd.DataFrame(data)
+
+print(df)
+###    Name  Age      City
+0  John   28  New York
+1  Emma   32    London
+2 Peter   25     Paris
+3  Lisa   30    Sydney
+### Series Example:
+import pandas as pd
+
+### Creating a Series from a list
+data = [10, 20, 30, 40, 50]
+s = pd.Series(data)
+
+print(s)
+### 0    10
+1    20
+2    30
+3    40
+4    50
+dtype: int64
