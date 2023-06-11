@@ -611,5 +611,5 @@ for re in range(10):
     response = requests.get('https://api.themoviedb.org/3/movie/top_rated?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US&page=1')
     tr=pd.DataFrame(response.json()['results'])[['id','title','overview']]
     df= tr.append(tr)
-###
+####
     making a GET request to the "top_rated" endpoint of the "themoviedb" API in a loop. For each request, you are extracting specific data from the JSON response (movie id, title, and overview) and appending it to a DataFrame
