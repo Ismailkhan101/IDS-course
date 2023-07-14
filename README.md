@@ -611,5 +611,99 @@ for re in range(10):
     response = requests.get('https://api.themoviedb.org/3/movie/top_rated?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US&page=1')
     tr=pd.DataFrame(response.json()['results'])[['id','title','overview']]
     df= tr.append(tr)
+#### making a GET request to the "top_rated" endpoint of the "themoviedb" API in a loop. For each request, you are extracting specific data from the JSON response (movie id, title, and overview) and appending it to a DataFrame
+##
+## Bivariate
+##
+  mporting Libraries: The code begins by importing the necessary libraries, namely pandas and seaborn, using the import statement.
+
+Loading Datasets: The seaborn.load_dataset function is used to load three datasets: 'tips', 'titanic', and 'flights'. These datasets are commonly used for demonstration purposes and come pre-packaged with the seaborn library.
+
+Exploring the 'flights' Dataset: The flights.head() statement displays the first few rows of the 'flights' dataset, giving a glimpse of its structure and contents.
+
+Scatter Plot: The sns.scatterplot function is used to create a scatter plot. It takes the 'total_bill' column as the x-axis, the 'tip' column as the y-axis, and assigns different colors (hue) based on whether the person is a smoker or not. Additionally, it differentiates the points by the gender (style) and sizes the points based on the party size (size).
+
+Bar Plot: The sns.barplot function generates a bar plot. It visualizes the average 'Age' grouped by 'Pclass' (passenger class) on the x-axis, with the 'Age' values represented by the y-axis. The bars are further divided by the 'Sex' column (hue).
+
+Box Plot: The sns.boxplot function creates a box plot. It shows the distribution of 'Age' for each gender (x-axis), split by the survival status (hue). The boxes represent the interquartile range, with the line inside representing the median.
+
+Distribution Plots: The sns.distplot and sns.displot functions are used to create distribution plots. They display the distribution of 'Age' for two different groups based on the 'Survived' column. One plot shows the distribution for passengers who did not survive ('Survived' == 0), and the other plot shows the distribution for passengers who survived ('Survived' == 1). The distplot function shows a histogram and a fitted kernel density estimate, while the displot function provides a flexible interface for creating various distribution plots.
+
+Kernel Density Estimation Plot: The sns.kdeplot function generates kernel density estimation plots. It visualizes the distribution of 'Age' for two groups based on the 'Survived' column. The hue is used to further differentiate the distributions based on 'Pclass'.
+
+Cluster Map: The sns.clustermap function creates a clustered heatmap using the pd.crosstab function. It displays a matrix of counts showing the relationship between 'Parch' (number of parents/children aboard) and 'Survived' columns in the 'titanic' dataset.
+
+Line Plot: The sns.lineplot function generates a line plot. It takes the 'year' column as the x-axis and the 'passengers' column as the y-axis, plotting the number of passengers over time.
+
+Pivot Table Cluster Map: The final sns.clustermap function creates a clustered heatmap using a pivot table. It visualizes the relationship between the 'month' and 'year' columns from the 'flights' dataset, with the values being the number of passengers.  
+##
+## Grouping Data
+##
+Sometimes we want to select data based on groups and understand aggregated data on a group level. We have seen that even though Pandas allows us to iterate over every row in a dataframe, it is generally very slow to do so. Fortunately Pandas has a groupby() function to speed up such task. The idea behind the groupby() function is  that it takes some dataframe, splits it into chunks based on some key values, applies computation on those  chunks, then combines the results back together into another dataframe. In pandas this is referred to as the split-apply-combine pattern.
+#
+for group, frame in df.groupby('STNAME'):
+    avg = np.average(frame['CENSUS2010POP'])
+    print('Counties in state ' + group + 
+          ' have an average population of ' + str(avg))
+##
+## Merging
+##
+In this lecture we're going to address how you can bring multiple dataframe objects together, either by merging them horizontally, or by concatenating them vertically. Before we jump into the code, we need to address a little relational theory and to get some language conventions down. I'm going to bring in an image to help explain some concepts.
+this is a Venn Diagram. A Venn Diagram is traditionally used to show set membership. For example, the circle on the left is the population of students at a university. The circle on the right is the population of staff at a university. And the overlapping region in the middle are all of those students who are also staff.  Maybe these students run tutorials for a course, or grade assignments, or engage in running research experiments.
+
+So, this diagram shows two populations whom we might have data about, but there is overlap between those populations.
+When it comes to translating this to pandas, we can think of the case where we might have these two populations as indices in separate DataFrames, maybe with the label of Person Name. When we want to join the DataFrames together, we have some choices to make. First what if we want a list of all the people regardless of whether they're staff or student, and all of the information we can get on them? In database terminology, this is called a full outer join. And in set theory, it's called a union. In the Venn diagram, it represents everyone in any circle.
+
+Here's an image of what that would look like in the Venn diagram.
+
+![Union](merging2.png)
+It's quite possible though that we only want those people who we have maximum information for, those people who are both staff and students. Maybe being a staff member and a student involves getting a tuition waiver, and we want to calculate the cost of this. In database terminology, this is called an inner join. Or in set theory, the intersection. It is represented in the Venn diagram as the overlapping parts of each circle.
+
+Here's what that looks like: ![Intersection](merging3.png)
+
+##
+import pandas as pd
+
+ First we create two DataFrames, staff and students.
+ ####
+staff_df = pd.DataFrame([{'Name': 'Kelly', 'Role': 'Director of HR'},
+                         {'Name': 'Sally', 'Role': 'Course liasion'},
+                         {'Name': 'James', 'Role': 'Grader'}])
+####			 
+ And lets index these staff by name
 ####
-    making a GET request to the "top_rated" endpoint of the "themoviedb" API in a loop. For each request, you are extracting specific data from the JSON response (movie id, title, and overview) and appending it to a DataFrame
+staff_df = staff_df.set_index('Name')
+####
+ Now we'll create a student dataframe
+ #### 
+student_df = pd.DataFrame([{'Name': 'James', 'School': 'Business'},
+                           {'Name': 'Mike', 'School': 'Law'},
+                           {'Name': 'Sally', 'School': 'Engineering'}])
+ ####			   
+ And we'll index this by name too
+####
+student_df = student_df.set_index('Name')
+####
+ And lets just print out the dataframes
+#### 
+print(staff_df.head())
+####
+print(student_df.head())
+ ####
+ #### If we want the union of these, we would call merge() passing in the DataFrame on the left and the DataFrame
+#### on the right and telling merge that we want it to use an outer join. We want to use the left and right
+#### indices as the joining columns.
+
+pd.merge(staff_df, student_df, how='outer', left_index=True, right_index=True)
+####
+#### We see in the resulting DataFrame that everyone is listed. And since Mike does not have a role, and John
+#### does not have a school, those cells are listed as missing values.
+
+#### If we wanted to get the intersection, that is, just those who are a student AND a staff, we could set the
+#### how attribute to inner. Again, we set both left and right indices to be true as the joining columns
+pd.merge(staff_df, student_df, how='inner', left_index=True, right_index=True)
+####
+pd.merge(staff_df, student_df, how='left', left_index=True, right_index=True)
+####
+pd.merge(staff_df, student_df, how='right', left_index=True, right_index=True)
+####
